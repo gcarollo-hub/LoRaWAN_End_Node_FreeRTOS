@@ -1,0 +1,4 @@
+/Users/peppe/Documents/STM32CubeIDE/workspace_114.0_3/LoRaWAN_End_Node_FreeRTOS/Middlewares/Third_Party/LoRaWAN/Mac/Region/RegionBaseUS.c:48:24:FindAvailable125kHzChannels	5
+/Users/peppe/Documents/STM32CubeIDE/workspace_114.0_3/LoRaWAN_End_Node_FreeRTOS/Middlewares/Third_Party/LoRaWAN/Mac/Region/RegionBaseUS.c:74:17:RegionBaseUSComputeNext125kHzJoinChannel	11
+/Users/peppe/Documents/STM32CubeIDE/workspace_114.0_3/LoRaWAN_End_Node_FreeRTOS/Middlewares/Third_Party/LoRaWAN/Mac/Region/RegionBaseUS.c:135:6:RegionBaseUSVerifyFrequencyGroup	4
+/Users/peppe/Documents/STM32CubeIDE/workspace_114.0_3/LoRaWAN_End_Node_FreeRTOS/Middlewares/Third_Party/LoRaWAN/Mac/Region/RegionBaseUS.c:146:10:RegionBaseUSCalcDownlinkFrequency	1

@@ -1,0 +1,7 @@
+/Users/peppe/Documents/STM32CubeIDE/workspace_114.0_3/LoRaWAN_End_Node_FreeRTOS/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c:329:13:prvHeapInit	2
+/Users/peppe/Documents/STM32CubeIDE/workspace_114.0_3/LoRaWAN_End_Node_FreeRTOS/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c:377:13:prvInsertBlockIntoFreeList	7
+/Users/peppe/Documents/STM32CubeIDE/workspace_114.0_3/LoRaWAN_End_Node_FreeRTOS/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c:113:7:pvPortMalloc	14
+/Users/peppe/Documents/STM32CubeIDE/workspace_114.0_3/LoRaWAN_End_Node_FreeRTOS/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c:263:6:vPortFree	4
+/Users/peppe/Documents/STM32CubeIDE/workspace_114.0_3/LoRaWAN_End_Node_FreeRTOS/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c:311:8:xPortGetFreeHeapSize	1
+/Users/peppe/Documents/STM32CubeIDE/workspace_114.0_3/LoRaWAN_End_Node_FreeRTOS/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c:317:8:xPortGetMinimumEverFreeHeapSize	1
+/Users/peppe/Documents/STM32CubeIDE/workspace_114.0_3/LoRaWAN_End_Node_FreeRTOS/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c:323:6:vPortInitialiseBlocks	1

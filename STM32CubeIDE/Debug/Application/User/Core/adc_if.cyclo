@@ -1,0 +1,5 @@
+/Users/peppe/Documents/STM32CubeIDE/workspace_114.0_3/LoRaWAN_End_Node_FreeRTOS/Core/Src/adc_if.c:181:17:ADC_ReadChannels	4
+/Users/peppe/Documents/STM32CubeIDE/workspace_114.0_3/LoRaWAN_End_Node_FreeRTOS/Core/Src/adc_if.c:79:6:SYS_InitMeasurement	1
+/Users/peppe/Documents/STM32CubeIDE/workspace_114.0_3/LoRaWAN_End_Node_FreeRTOS/Core/Src/adc_if.c:90:6:SYS_DeInitMeasurement	1
+/Users/peppe/Documents/STM32CubeIDE/workspace_114.0_3/LoRaWAN_End_Node_FreeRTOS/Core/Src/adc_if.c:139:10:SYS_GetBatteryLevel	3
+/Users/peppe/Documents/STM32CubeIDE/workspace_114.0_3/LoRaWAN_End_Node_FreeRTOS/Core/Src/adc_if.c:97:9:SYS_GetTemperatureLevel	2

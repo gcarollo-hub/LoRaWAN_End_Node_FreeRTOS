@@ -1,0 +1,7 @@
+/Users/peppe/Documents/STM32CubeIDE/workspace_114.0_3/LoRaWAN_End_Node_FreeRTOS/Core/Src/app_freertos.c:219:13:WakeUpTimer_Cb	0	static
+/Users/peppe/Documents/STM32CubeIDE/workspace_114.0_3/LoRaWAN_End_Node_FreeRTOS/Core/Src/app_freertos.c:225:17:app_freertos_ms_to_tick	0	static
+/Users/peppe/Documents/STM32CubeIDE/workspace_114.0_3/LoRaWAN_End_Node_FreeRTOS/Core/Src/app_freertos.c:235:17:app_freertos_tick_to_ms	0	static
+/Users/peppe/Documents/STM32CubeIDE/workspace_114.0_3/LoRaWAN_End_Node_FreeRTOS/Core/Src/app_freertos.c:204:6:StartDefaultTask	8	static
+/Users/peppe/Documents/STM32CubeIDE/workspace_114.0_3/LoRaWAN_End_Node_FreeRTOS/Core/Src/app_freertos.c:97:6:PreSleepProcessing	16	static
+/Users/peppe/Documents/STM32CubeIDE/workspace_114.0_3/LoRaWAN_End_Node_FreeRTOS/Core/Src/app_freertos.c:126:6:PostSleepProcessing	24	static
+/Users/peppe/Documents/STM32CubeIDE/workspace_114.0_3/LoRaWAN_End_Node_FreeRTOS/Core/Src/app_freertos.c:161:6:MX_FREERTOS_Init	16	static

@@ -1,0 +1,3 @@
+/Users/peppe/Documents/STM32CubeIDE/workspace_114.0_3/LoRaWAN_End_Node_FreeRTOS/Utilities/misc/stm32_tiny_vsnprintf.c:91:12:ee_skip_atoi	0	static
+/Users/peppe/Documents/STM32CubeIDE/workspace_114.0_3/LoRaWAN_End_Node_FreeRTOS/Utilities/misc/stm32_tiny_vsnprintf.c:100:14:ee_number	104	static
+/Users/peppe/Documents/STM32CubeIDE/workspace_114.0_3/LoRaWAN_End_Node_FreeRTOS/Utilities/misc/stm32_tiny_vsnprintf.c:485:5:tiny_vsnprintf_like	56	static

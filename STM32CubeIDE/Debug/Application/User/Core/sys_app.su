@@ -1,0 +1,12 @@
+/Users/peppe/Documents/STM32CubeIDE/workspace_114.0_3/LoRaWAN_End_Node_FreeRTOS/Core/Src/sys_app.c:282:13:tiny_snprintf_like	16	static
+/Users/peppe/Documents/STM32CubeIDE/workspace_114.0_3/LoRaWAN_End_Node_FreeRTOS/Core/Src/sys_app.c:246:13:TimestampNow	32	static
+/Users/peppe/Documents/STM32CubeIDE/workspace_114.0_3/LoRaWAN_End_Node_FreeRTOS/Core/Src/sys_app.c:89:6:SystemApp_Init	8	static
+/Users/peppe/Documents/STM32CubeIDE/workspace_114.0_3/LoRaWAN_End_Node_FreeRTOS/Core/Src/sys_app.c:137:9:GetBatteryLevel	8	static
+/Users/peppe/Documents/STM32CubeIDE/workspace_114.0_3/LoRaWAN_End_Node_FreeRTOS/Core/Src/sys_app.c:169:9:GetTemperatureLevel	32	static
+/Users/peppe/Documents/STM32CubeIDE/workspace_114.0_3/LoRaWAN_End_Node_FreeRTOS/Core/Src/sys_app.c:183:6:GetUniqueId	16	static
+/Users/peppe/Documents/STM32CubeIDE/workspace_114.0_3/LoRaWAN_End_Node_FreeRTOS/Core/Src/sys_app.c:223:6:GetDevAddr	16	static
+/Users/peppe/Documents/STM32CubeIDE/workspace_114.0_3/LoRaWAN_End_Node_FreeRTOS/Core/Src/sys_app.c:260:6:UTIL_ADV_TRACE_PreSendHook	8	static
+/Users/peppe/Documents/STM32CubeIDE/workspace_114.0_3/LoRaWAN_End_Node_FreeRTOS/Core/Src/sys_app.c:271:6:UTIL_ADV_TRACE_PostSendHook	8	static
+/Users/peppe/Documents/STM32CubeIDE/workspace_114.0_3/LoRaWAN_End_Node_FreeRTOS/Core/Src/sys_app.c:305:19:HAL_InitTick	0	static
+/Users/peppe/Documents/STM32CubeIDE/workspace_114.0_3/LoRaWAN_End_Node_FreeRTOS/Core/Src/sys_app.c:320:10:HAL_GetTick	8	static
+/Users/peppe/Documents/STM32CubeIDE/workspace_114.0_3/LoRaWAN_End_Node_FreeRTOS/Core/Src/sys_app.c:352:6:HAL_Delay	16	static
