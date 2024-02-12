@@ -394,6 +394,9 @@ static UTIL_TIMER_Object_t RxLedTimer;
   */
 static UTIL_TIMER_Object_t JoinLedTimer;
 
+
+extern uint16_t   uhADCxConvertedData_Voltage_mVolt;  /* Value of voltage calculated from ADC conversion data (unit: mV) */
+
 /* USER CODE END PV */
 
 /* Exported functions ---------------------------------------------------------*/
@@ -767,6 +770,12 @@ static void SendTxData(void)
       AppData.Buffer[i++] = (uint8_t)((altitudeGps >> 8) & 0xFF);
       AppData.Buffer[i++] = (uint8_t)(altitudeGps & 0xFF);
     }
+
+    // peppe voltage sensor
+
+    AppData.Buffer[i++] = (uint8_t)((uhADCxConvertedData_Voltage_mVolt >> 8) & 0xFF);
+    AppData.Buffer[i++] = (uint8_t)(uhADCxConvertedData_Voltage_mVolt & 0xFF);
+
 
     AppData.BufferSize = i;
 #endif /* CAYENNE_LPP */

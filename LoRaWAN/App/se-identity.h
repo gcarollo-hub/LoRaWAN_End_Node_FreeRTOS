@@ -94,7 +94,7 @@ extern "C" {
 /*!
  * App/Join server IEEE EUI (big endian)
  */
-#define LORAWAN_JOIN_EUI                                   8e,f1,2f,d8,df,e6,d9,45
+#define LORAWAN_JOIN_EUI                                   8E,F1,2F,D8,DF,E6,D9,45
 
 /*!
  * Device address on the network (big endian)
