@@ -34,6 +34,8 @@ void MX_ADC_Init(void)
 
   /* USER CODE END ADC_Init 0 */
 
+  ADC_ChannelConfTypeDef sConfig = {0};
+
   /* USER CODE BEGIN ADC_Init 1 */
 
   /* USER CODE END ADC_Init 1 */
@@ -63,6 +65,16 @@ void MX_ADC_Init(void)
   {
     Error_Handler();
   }
+
+  /** Configure Regular Channel
+  */
+  sConfig.Channel = ADC_CHANNEL_7;
+  sConfig.Rank = ADC_REGULAR_RANK_1;
+  sConfig.SamplingTime = ADC_SAMPLINGTIME_COMMON_1;
+  if (HAL_ADC_ConfigChannel(&hadc, &sConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
   /* USER CODE BEGIN ADC_Init 2 */
 
   /* USER CODE END ADC_Init 2 */
@@ -72,6 +84,7 @@ void MX_ADC_Init(void)
 void HAL_ADC_MspInit(ADC_HandleTypeDef* adcHandle)
 {
 
+  GPIO_InitTypeDef GPIO_InitStruct = {0};
   if(adcHandle->Instance==ADC)
   {
   /* USER CODE BEGIN ADC_MspInit 0 */
@@ -79,6 +92,19 @@ void HAL_ADC_MspInit(ADC_HandleTypeDef* adcHandle)
   /* USER CODE END ADC_MspInit 0 */
     /* ADC clock enable */
     __HAL_RCC_ADC_CLK_ENABLE();
+
+    __HAL_RCC_GPIOA_CLK_ENABLE();
+    /**ADC GPIO Configuration
+    PA11     ------> ADC_IN7
+    */
+    GPIO_InitStruct.Pin = GPIO_PIN_11;
+    GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
+    GPIO_InitStruct.Pull = GPIO_NOPULL;
+    HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+
+    /* ADC interrupt Init */
+    HAL_NVIC_SetPriority(ADC_IRQn, 5, 0);
+    HAL_NVIC_EnableIRQ(ADC_IRQn);
   /* USER CODE BEGIN ADC_MspInit 1 */
 
   /* USER CODE END ADC_MspInit 1 */
@@ -95,6 +121,14 @@ void HAL_ADC_MspDeInit(ADC_HandleTypeDef* adcHandle)
   /* USER CODE END ADC_MspDeInit 0 */
     /* Peripheral clock disable */
     __HAL_RCC_ADC_CLK_DISABLE();
+
+    /**ADC GPIO Configuration
+    PA11     ------> ADC_IN7
+    */
+    HAL_GPIO_DeInit(GPIOA, GPIO_PIN_11);
+
+    /* ADC interrupt Deinit */
+    HAL_NVIC_DisableIRQ(ADC_IRQn);
   /* USER CODE BEGIN ADC_MspDeInit 1 */
 
   /* USER CODE END ADC_MspDeInit 1 */

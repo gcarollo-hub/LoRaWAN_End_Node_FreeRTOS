@@ -29,6 +29,8 @@
 /* USER CODE BEGIN Includes */
 #include "stm32_timer.h"
 #include "stm32_lpm.h"
+
+#include "app_sensor.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -206,6 +208,11 @@ void StartDefaultTask(void *argument)
   /* init code for LoRaWAN */
   MX_LoRaWAN_Init();
   /* USER CODE BEGIN StartDefaultTask */
+
+  Sensor_Init();
+
+
+
   /* Infinite loop */
   for(;;)
   {
