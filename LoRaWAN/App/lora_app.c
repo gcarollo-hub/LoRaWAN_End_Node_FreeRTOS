@@ -41,6 +41,8 @@
 
 /* External variables ---------------------------------------------------------*/
 /* USER CODE BEGIN EV */
+/* peppe */
+extern uint8_t pumpStatus;
 
 /* USER CODE END EV */
 
@@ -367,6 +369,9 @@ static void Thd_LmHandlerProcess(void *argument);
 /**
   * @brief User application buffer
   */
+extern osThreadId_t Thd_SensorProcessId;
+
+
 static uint8_t AppDataBuffer[LORAWAN_APP_DATA_BUFFER_MAX_SIZE];
 
 /**
@@ -658,19 +663,30 @@ static void OnRxData(LmHandlerAppData_t *appData, LmHandlerRxParams_t *params)
               }
               break;
             case LORAWAN_USER_APP_PORT:
-              if (appData->BufferSize == 1)
-              {
-                AppLedStateOn = appData->Buffer[0] & 0x01;
-                if (AppLedStateOn == RESET)
-                {
-                  APP_LOG(TS_OFF, VLEVEL_H, "LED OFF\r\n");
-                  HAL_GPIO_WritePin(LED3_GPIO_Port, LED3_Pin, GPIO_PIN_RESET); /* LED_RED */
-                }
-                else
-                {
-                  APP_LOG(TS_OFF, VLEVEL_H, "LED ON\r\n");
-                  HAL_GPIO_WritePin(LED3_GPIO_Port, LED3_Pin, GPIO_PIN_SET); /* LED_RED */
-                }
+
+              if (appData->BufferSize == 4 && appData->Buffer[0] == 'P')
+              { // --- driving pump and actuator (third byte)
+                osThreadFlagsSet(Thd_SensorProcessId, ( (appData->Buffer[2]<< 8) & 0x0000FF00U) );
+//                AppLedStateOn = appData->Buffer[0] & 0x01;
+//                if (AppLedStateOn == RESET)
+//                {
+//                  APP_LOG(TS_OFF, VLEVEL_H, "Buffer[0] %x LED OFF\r\n", AppLedStateOn);
+//                  HAL_GPIO_WritePin(LED3_GPIO_Port, LED3_Pin, GPIO_PIN_RESET); /* LED_RED */
+//                }
+//                else
+//                {
+//                  APP_LOG(TS_OFF, VLEVEL_H, "Buffer[0] %x LED ON\r\n", AppLedStateOn);
+//                  HAL_GPIO_WritePin(LED3_GPIO_Port, LED3_Pin, GPIO_PIN_SET); /* LED_RED */
+//                }
+//              }
+//              else
+//              {
+//                APP_LOG(TS_OFF, VLEVEL_H, "BUFFER DOWNLINK: ");
+//                for(int c=0; c<appData->BufferSize; c++)
+//                {
+//                  APP_LOG(TS_OFF, VLEVEL_H, "%x", appData->Buffer[c]);
+//                }
+//                APP_LOG(TS_OFF, VLEVEL_H, "\r\n");
               }
               break;
 
@@ -740,42 +756,44 @@ static void SendTxData(void)
     temperature = (int16_t)(sensor_data.temperature);
     pressure = (uint16_t)(sensor_data.pressure * 100 / 10); /* in hPa / 10 */
 
-    AppData.Buffer[i++] = AppLedStateOn;
+    AppData.Buffer[i++] = AppLedStateOn;// Buffer[0]
     AppData.Buffer[i++] = (uint8_t)((pressure >> 8) & 0xFF);
     AppData.Buffer[i++] = (uint8_t)(pressure & 0xFF);
     AppData.Buffer[i++] = (uint8_t)(temperature & 0xFF);
     AppData.Buffer[i++] = (uint8_t)((humidity >> 8) & 0xFF);
-    AppData.Buffer[i++] = (uint8_t)(humidity & 0xFF);
+    AppData.Buffer[i++] = (uint8_t)(humidity & 0xFF);// Buffer[5]
 
-    if ((LmHandlerParams.ActiveRegion == LORAMAC_REGION_US915) || (LmHandlerParams.ActiveRegion == LORAMAC_REGION_AU915)
-        || (LmHandlerParams.ActiveRegion == LORAMAC_REGION_AS923))
-    {
-      AppData.Buffer[i++] = 0;
-      AppData.Buffer[i++] = 0;
-      AppData.Buffer[i++] = 0;
-      AppData.Buffer[i++] = 0;
-    }
-    else
-    {
-      latitude = sensor_data.latitude;
-      longitude = sensor_data.longitude;
 
-      AppData.Buffer[i++] = GetBatteryLevel();        /* 1 (very low) to 254 (fully charged) */
-      AppData.Buffer[i++] = (uint8_t)((latitude >> 16) & 0xFF);
-      AppData.Buffer[i++] = (uint8_t)((latitude >> 8) & 0xFF);
-      AppData.Buffer[i++] = (uint8_t)(latitude & 0xFF);
-      AppData.Buffer[i++] = (uint8_t)((longitude >> 16) & 0xFF);
-      AppData.Buffer[i++] = (uint8_t)((longitude >> 8) & 0xFF);
-      AppData.Buffer[i++] = (uint8_t)(longitude & 0xFF);
-      AppData.Buffer[i++] = (uint8_t)((altitudeGps >> 8) & 0xFF);
-      AppData.Buffer[i++] = (uint8_t)(altitudeGps & 0xFF);
-    }
+// --- peppe no lat - lon for now
+//    if ((LmHandlerParams.ActiveRegion == LORAMAC_REGION_US915) || (LmHandlerParams.ActiveRegion == LORAMAC_REGION_AU915)
+//        || (LmHandlerParams.ActiveRegion == LORAMAC_REGION_AS923))
+//    {
+//      AppData.Buffer[i++] = 0; //Buffer[6]
+//      AppData.Buffer[i++] = 0;
+//      AppData.Buffer[i++] = 0;
+//      AppData.Buffer[i++] = 0; //Buffer[9]
+//    }
+//    else
+//    {
+//      latitude = sensor_data.latitude;
+//      longitude = sensor_data.longitude;
+//
+//      AppData.Buffer[i++] = GetBatteryLevel();        /* 1 (very low) to 254 (fully charged) */ // Buffer[10]
+//      AppData.Buffer[i++] = (uint8_t)((latitude >> 16) & 0xFF);
+//      AppData.Buffer[i++] = (uint8_t)((latitude >> 8) & 0xFF);
+//      AppData.Buffer[i++] = (uint8_t)(latitude & 0xFF);
+//      AppData.Buffer[i++] = (uint8_t)((longitude >> 16) & 0xFF);
+//      AppData.Buffer[i++] = (uint8_t)((longitude >> 8) & 0xFF);
+//      AppData.Buffer[i++] = (uint8_t)(longitude & 0xFF);
+//      AppData.Buffer[i++] = (uint8_t)((altitudeGps >> 8) & 0xFF);
+//      AppData.Buffer[i++] = (uint8_t)(altitudeGps & 0xFF); //Buffer[17]
+//    }
 
     // peppe voltage sensor
 
-    AppData.Buffer[i++] = (uint8_t)((uhADCxConvertedData_Voltage_mVolt >> 8) & 0xFF);
+    AppData.Buffer[i++] = (uint8_t)((uhADCxConvertedData_Voltage_mVolt >> 8) & 0xFF); // Buffer[6]
     AppData.Buffer[i++] = (uint8_t)(uhADCxConvertedData_Voltage_mVolt & 0xFF);
-
+    AppData.Buffer[i++] = pumpStatus; // Buffer[8]
 
     AppData.BufferSize = i;
 #endif /* CAYENNE_LPP */

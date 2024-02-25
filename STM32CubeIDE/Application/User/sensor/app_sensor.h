@@ -10,6 +10,24 @@
 
 #include "stdint.h"
 
+typedef enum
+{
+  PUMP1_STATUS_ON = 0x01,
+  PUMP2_STATUS_ON = 0x02
+} PumpStatusMask;
+
+/* LED */
+//#define LED_PUMP_1_GROUP GPIOB
+#define LED_PUMP_1  GPIO_PIN_8
+#define LED_PUMP_2  GPIO_PIN_10
+
+/* flags */
+#define THREAD_FLAG_READ_SENSOR    (0x00000001U)
+#define THREAD_FLAG_PUMP1_TOGGLE   (0x00000100U)
+#define THREAD_FLAG_PUMP2_TOGGLE   (0x00000200U)
+#define THREAD_FLAG_PUMPS_TOGGLE   (0x00000400U)
+
+
 /* version */
 #define SENSOR_APP_VERSION_MAIN   (0x01U) /*!< [31:24] main version */
 #define SENSOR_APP_VERSION_SUB1   (0x00U) /*!< [23:16] sub1 version */

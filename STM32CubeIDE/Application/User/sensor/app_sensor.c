@@ -49,6 +49,11 @@ static void Thd_SensorProcess(void *argument);
 void SensorProcess( void );
 static void OnSensorTimerEvent(void *context);
 
+/* peppe */
+uint8_t pumpStatus;
+
+static void Toggle_Pump(uint32_t pumpToggleMask);
+
 /**
   * @brief Timer to handle the application Tx
   */
@@ -89,8 +94,17 @@ static void Thd_SensorProcess(void *argument)
   UNUSED(argument);
   for (;;)
   {
-    osThreadFlagsWait(1, osFlagsWaitAny, osWaitForever);
-    SensorProcess(); /*what you want to do*/
+    uint32_t flags = osThreadFlagsWait((THREAD_FLAG_PUMP1_TOGGLE | THREAD_FLAG_PUMP2_TOGGLE | THREAD_FLAG_READ_SENSOR), osFlagsWaitAny, osWaitForever);
+    if((flags & THREAD_FLAG_READ_SENSOR) == THREAD_FLAG_READ_SENSOR)
+    {
+      SensorProcess();
+    }
+    if( ((flags & THREAD_FLAG_PUMP1_TOGGLE) == THREAD_FLAG_PUMP1_TOGGLE) ||
+        ((flags & THREAD_FLAG_PUMP2_TOGGLE) == THREAD_FLAG_PUMP2_TOGGLE))
+    {
+      Toggle_Pump(flags);
+    }
+
   }
 }
 
@@ -104,6 +118,7 @@ void SensorProcess( void )
   //uint32_t ret = ADC_ReadChannels(ADC_CHANNEL_7);
 
   uhADCxConvertedData_Voltage_mVolt = SYS_GetVoltLevel();
+
   APP_LOG(TS_OFF, VLEVEL_M, "SENSOR_LEVEL: mV %d \r\n",
       (uint16_t)(uhADCxConvertedData_Voltage_mVolt));
 
@@ -119,6 +134,48 @@ void SensorProcess( void )
 
 }
 
+
+static void Toggle_Pump(uint32_t pumpToggleMask)
+{
+  // toggle Pump1 setted
+  if ((pumpToggleMask & THREAD_FLAG_PUMP1_TOGGLE) == THREAD_FLAG_PUMP1_TOGGLE)
+  {
+    if((pumpStatus & PUMP1_STATUS_ON) ==  0x00 ) // Pump1 is OFF
+    {
+      pumpStatus = pumpStatus | PUMP1_STATUS_ON;
+      APP_LOG(TS_OFF, VLEVEL_H, "Pump 1 from OFF to ON\r\n");
+//      HAL_GPIO_WritePin(LED3_GPIO_Port, LED3_Pin, GPIO_PIN_SET); /* LED_RED */
+      HAL_GPIO_WritePin(LED2_GPIO_Port, LED_PUMP_1, GPIO_PIN_SET); /* LED_RED */
+    }
+    else if(( pumpStatus  & PUMP1_STATUS_ON) ==  PUMP1_STATUS_ON)
+    {
+      pumpStatus = pumpStatus & ~PUMP1_STATUS_ON;
+      APP_LOG(TS_OFF, VLEVEL_H, "Pump 1 from ON to OFF\r\n");
+//      HAL_GPIO_WritePin(LED3_GPIO_Port, LED3_Pin, GPIO_PIN_RESET); /* LED_RED */
+      HAL_GPIO_WritePin(LED2_GPIO_Port, LED_PUMP_1, GPIO_PIN_RESET); /* LED_RED */
+    }
+  }
+
+  if ((pumpToggleMask & THREAD_FLAG_PUMP2_TOGGLE) == THREAD_FLAG_PUMP2_TOGGLE)
+  {
+    if((pumpStatus & PUMP2_STATUS_ON) ==  0x00 ) // Pump1 is OFF
+    {
+      pumpStatus = pumpStatus | PUMP2_STATUS_ON;
+      APP_LOG(TS_OFF, VLEVEL_H, "Pump 2 from OFF to ON\r\n");
+//      HAL_GPIO_WritePin(LED3_GPIO_Port, LED3_Pin, GPIO_PIN_SET); /* LED_RED */
+      HAL_GPIO_WritePin(LED3_GPIO_Port, LED_PUMP_2, GPIO_PIN_SET); /* LED_RED */
+    }
+    else if(( pumpStatus  & PUMP2_STATUS_ON) ==  PUMP2_STATUS_ON)
+    {
+      pumpStatus = pumpStatus & ~PUMP2_STATUS_ON;
+      APP_LOG(TS_OFF, VLEVEL_H, "Pump 2 from ON to OFF\r\n");
+//      HAL_GPIO_WritePin(LED3_GPIO_Port, LED3_Pin, GPIO_PIN_RESET); /* LED_RED */
+      HAL_GPIO_WritePin(LED3_GPIO_Port, LED_PUMP_2, GPIO_PIN_RESET); /* LED_RED */
+    }
+  }
+
+
+}
 
 static uint32_t ADC_ReadChannels(uint32_t channel)
 {
@@ -197,7 +254,7 @@ static void OnSensorTimerEvent(void *context)
   /* USER CODE BEGIN OnTxTimerEvent_1 */
 
   /* USER CODE END OnTxTimerEvent_1 */
-  osThreadFlagsSet(Thd_SensorProcessId, 1);
+  osThreadFlagsSet(Thd_SensorProcessId, THREAD_FLAG_READ_SENSOR);
 
   /*Wait for next tx slot*/
   UTIL_TIMER_Start(&SensorTimer);
